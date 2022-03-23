@@ -8,36 +8,37 @@ pipeline {
                 //sh 'sudo apk add --no-cache git'
                 sh 'mvn --version'
                 sh 'ls'
-                
-				checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/CSPF-Founder/JavaVulnerableLab']]]	);
+		checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/luisgarciacheckmarx/Pipeline_SCAResolver_SlaveUnix3']]]	);
             }
         }
         
 
 
 		
-		stage('SCA Resolver') {
+	stage('SCA Resolver') {
             steps {
-				script {
-				    sh 'rm *.pdf'
-					def tempDir = pwd(tmp: true)
-					dir(tempDir) {
-						sh 'wget https://sca-downloads.s3.amazonaws.com/cli/1.7.3/ScaResolver-linux64.tar.gz -O ScaResolver.tar.gz'
-                        sh 'tar -xzvf ScaResolver.tar.gz'
-                        sh 'rm -rf ScaResolver.tar.gz'
-                        sh 'chmod +x ScaResolver'
-                        sh 'echo "Current directory: $(pwd)"'
-                        sh 'ls -latr $(pwd)'
-						sh './ScaResolver -a ps-team-emea -u luis.garciaviejo@checkmarx.com -p CxPass123! -s /home/jenkins/workspace/Pipeline_SCAResolver_SlaveUnix2 --report-path /home/jenkins/workspace/Pipeline_SCAResolver_SlaveUnix2 --report-type Risk --report-extension Pdf,Json,Xml -n Pipeline_SCAResolver_SlaveUnix2 --bypass-exitcode'
+		script {
+			sh 'rm -f *.pdf'
+			//sh '[ -e *.pdf ] && rm *.pdf '
+			def tempDir = pwd(tmp: true)
+			dir(tempDir) {
+				sh 'wget https://sca-downloads.s3.amazonaws.com/cli/1.7.3/ScaResolver-linux64.tar.gz -O ScaResolver.tar.gz'
+                        	sh 'tar -xzvf ScaResolver.tar.gz'
+                        	sh 'rm -rf ScaResolver.tar.gz'
+                        	sh 'chmod +x ScaResolver'
+                        	sh 'echo "Current directory: $(pwd)"'
+                        	sh 'ls -latr $(pwd)'
+				sh './ScaResolver -a ps-team-emea -u luis.garciaviejo@checkmarx.com -p CxPass123! -s /home/jenkins/workspace/Pipeline_SCAResolver_SlaveUnix2 --report-path /home/jenkins/workspace/Pipeline_SCAResolver_SlaveUnix2 --report-type Risk --report-extension Pdf,Json,Xml -n Pipeline_SCAResolver_SlaveUnix2 --bypass-exitcode'
 						
-					}
 				}
-            }
-        }
+			}
+            	}
+	}
         
-        stage('Publish as HTML') {
+        
+	stage('Publish as HTML') {
             steps {
-				sh 'echo "<html> <body> <h1> Heading HTML test </h1> </body> <html>"'
+		sh 'echo "<html> <body> <h1> Heading HTML test </h1> </body> <html>"'
                 //sh 'cat ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/log >> log.html'
                 //sh 'echo "<!DOCTYPE html>" > log.html'
                 //sh 'echo "<!DOCTYPE html>" >> log.html'
@@ -53,12 +54,8 @@ pipeline {
 
                 sh 'ls -latr '
                 publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: '.', reportFiles: '*.pdf', reportName: 'SCA scan report', reportTitles: ''])
-                }
-		}
-            
-        
-		
+            }
+	}
 		
     }
 }
-
