@@ -29,7 +29,8 @@ pipeline {
                         	sh 'echo "Current directory: $(pwd)"'
                         	sh 'ls -latr $(pwd)'
 				withCredentials([usernamePassword(credentialsId: 'SCA', passwordVariable: 'pass', usernameVariable: 'user')]) { 
-				  sh './ScaResolver -a ps-team-emea -u $user -p $pass -s ${WORKSPACE} --report-path ${WORKSPACE} --report-type Risk --report-extension Pdf,Json,Xml -n Pipeline_SCAResolver_SlaveUnix2 --bypass-exitcode'
+					sh 'echo hola $user'
+				  	sh './ScaResolver -a ps-team-emea -u $user -p $pass -s ${WORKSPACE} --report-path ${WORKSPACE} --report-type Risk --report-extension Pdf,Json,Xml -n Pipeline_SCAResolver_SlaveUnix2 --bypass-exitcode'
 				}		
 				}
 			}
