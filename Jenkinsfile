@@ -28,7 +28,7 @@ pipeline {
                         	sh 'chmod +x ScaResolver'
                         	sh 'echo "Current directory: $(pwd)"'
                         	sh 'ls -latr $(pwd)'
-				sh './ScaResolver -a ps-team-emea -u luis.garciaviejo@checkmarx.com -p CxPass123! -s /home/jenkins/workspace/Pipeline_SCAResolver_SlaveUnix2 --report-path /home/jenkins/workspace/Pipeline_SCAResolver_SlaveUnix2 --report-type Risk --report-extension Pdf,Json,Xml -n Pipeline_SCAResolver_SlaveUnix2 --bypass-exitcode'
+				sh './ScaResolver -a ps-team-emea -u luis.garciaviejo@checkmarx.com -p CxPass123! -s ${WORKSPACE} --report-path ${WORKSPACE} --report-type Risk --report-extension Pdf,Json,Xml -n Pipeline_SCAResolver_SlaveUnix2 --bypass-exitcode'
 						
 				}
 			}
