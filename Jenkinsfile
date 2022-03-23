@@ -28,8 +28,9 @@ pipeline {
                         	sh 'chmod +x ScaResolver'
                         	sh 'echo "Current directory: $(pwd)"'
                         	sh 'ls -latr $(pwd)'
-				sh './ScaResolver -a ps-team-emea -u luis.garciaviejo@checkmarx.com -p CxPass123! -s ${WORKSPACE} --report-path ${WORKSPACE} --report-type Risk --report-extension Pdf,Json,Xml -n Pipeline_SCAResolver_SlaveUnix2 --bypass-exitcode'
-						
+				withCredentials([usernamePassword(credentialsId: 'SCA', passwordVariable: 'pass', usernameVariable: 'user')]) { 
+				  sh './ScaResolver -a ps-team-emea -u $user -p $pass -s ${WORKSPACE} --report-path ${WORKSPACE} --report-type Risk --report-extension Pdf,Json,Xml -n Pipeline_SCAResolver_SlaveUnix2 --bypass-exitcode'
+				}		
 				}
 			}
             	}
