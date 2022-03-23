@@ -18,7 +18,8 @@ pipeline {
 	stage('SCA Resolver') {
             steps {
 		script {
-			sh 'rm *.pdf'
+			sh 'rm -f *.pdf'
+			//sh '[ -e *.pdf ] && rm *.pdf '
 			def tempDir = pwd(tmp: true)
 			dir(tempDir) {
 				sh 'wget https://sca-downloads.s3.amazonaws.com/cli/1.7.3/ScaResolver-linux64.tar.gz -O ScaResolver.tar.gz'
