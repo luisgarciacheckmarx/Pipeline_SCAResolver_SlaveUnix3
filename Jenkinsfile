@@ -18,6 +18,9 @@ pipeline {
 	stage('SCA Resolver') {
             steps {
 		script {
+			withCredentials([usernamePassword(credentialsId: 'SCA', passwordVariable: 'pass', usernameVariable: 'user')]) {
+				sh 'echo hola $user $pass'
+			}
 			sh 'rm -f *.pdf'
 			//sh '[ -e *.pdf ] && rm *.pdf '
 			def tempDir = pwd(tmp: true)
