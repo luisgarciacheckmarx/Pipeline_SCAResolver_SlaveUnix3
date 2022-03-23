@@ -8,7 +8,7 @@ pipeline {
                 //sh 'sudo apk add --no-cache git'
                 sh 'mvn --version'
                 sh 'ls'
-		checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/CSPF-Founder/JavaVulnerableLab']]]	);
+		checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/luisgarciacheckmarx/Pipeline_SCAResolver_SlaveUnix3']]]	);
             }
         }
         
